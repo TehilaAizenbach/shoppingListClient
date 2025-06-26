@@ -33,7 +33,6 @@ const CategoriesProducts = ({ categories }: Props) => {
 const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // למצוא כמה שורות הכי גדולות בטבלה (לפי הקטגוריה עם הכי הרבה מוצרים)
   const maxProducts = Math.max(...categories.map((c) => c.products.length), 0);
 
   if (categories.length === 0) {
@@ -51,7 +50,6 @@ const theme = useTheme();
       </Typography>
 
       {isMobile ? (
-        // --- מובייל: רשימת קארדים ---
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {categories.map((category) => (
             <Card key={category.id} elevation={3}>
@@ -100,7 +98,6 @@ const theme = useTheme();
           ))}
         </Box>
       ) : (
-        // --- דסקטופ: טבלה ---
         <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
           <Table>
             <TableHead>

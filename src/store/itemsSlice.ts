@@ -21,14 +21,12 @@
       { getState }
     ) => {
       const state = getState() as RootState;
-      console.log("state",state.items.items);
       
       const existing = state.items.items.find(
         (item) =>
           item.name.trim().toLowerCase() === name.trim().toLowerCase() &&
           item.category.id === categoryId   
       );
-      console.log("existing",existing);
       
       let updatedItem;
       if (existing) {
@@ -76,9 +74,9 @@
           const idx = state.items.findIndex((i) => i.id === updatedItem.id);
 
           if (idx !== -1) {
-            state.items[idx] = updatedItem; // עדכון פריט קיים
+            state.items[idx] = updatedItem;
           } else {
-            state.items.push(updatedItem); // הוספת חדש
+            state.items.push(updatedItem);
           }
 
           state.loading = false;

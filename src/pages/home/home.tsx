@@ -20,7 +20,7 @@ const Home = () => {
     return (
       <Box
         sx={{
-          height: "100vh",           // גובה מלא של המסך
+          height: "100vh",         
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
