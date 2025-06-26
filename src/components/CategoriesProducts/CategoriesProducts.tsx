@@ -18,6 +18,15 @@ const CategoriesProducts = ({ categories }: Props) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const getProductCountLabel = (
+    categoryName: string,
+    products: { quantity: number }[]
+  ) => {
+    const total = products.reduce((sum, p) => sum + p.quantity, 0);
+    if (total === 0) return `${categoryName} - לא קיימים מוצרים`;
+    if (total === 1) return `${categoryName} - מוצר אחד`;
+    return `${categoryName} - ${total} מוצרים`;
+  };
   if (categories.length === 0) {
     return (
       <Typography sx={{ mt: 3, textAlign: "center" }}>
@@ -32,9 +41,9 @@ const CategoriesProducts = ({ categories }: Props) => {
         נא לאסוף מוצרים אלו במחלקות המתאימות
       </Typography>
       {isMobile ? (
-        <CategoryCardList categories={categories} />
+        <CategoryCardList categories={categories} getProductCountLabel={getProductCountLabel} />
       ) : (
-        <CategoryTable categories={categories} />
+        <CategoryTable categories={categories} getProductCountLabel={getProductCountLabel} />
       )}
     </Box>
   );

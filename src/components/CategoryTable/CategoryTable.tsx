@@ -13,9 +13,11 @@ import { CategoryWithProducts } from "../CategoriesProducts/CategoriesProducts";
 
 interface Props {
   categories: CategoryWithProducts[];
+  getProductCountLabel: (name: string, products: { quantity: number }[]) => string;
+
 }
 
-const CategoryTable: React.FC<Props> = ({ categories }) => {
+const CategoryTable: React.FC<Props> = ({ categories, getProductCountLabel }) => {
   const theme = useTheme();
   const maxProducts = Math.max(...categories.map((c) => c.products.length), 0);
 
@@ -26,16 +28,17 @@ const CategoryTable: React.FC<Props> = ({ categories }) => {
           <TableRow>
             {categories.map((category) => (
               <TableCell
-                key={category.id}
+                key={`header-${category.id}`}
                 align="center"
                 sx={{
                   backgroundColor: theme.palette.primary.main,
                   color: theme.palette.primary.contrastText,
                   fontWeight: "bold",
                   fontSize: "1.1rem",
+                  textAlign: "center",
                 }}
               >
-                {category.name}
+                {getProductCountLabel(category.name, category.products)}
               </TableCell>
             ))}
           </TableRow>
@@ -48,9 +51,9 @@ const CategoryTable: React.FC<Props> = ({ categories }) => {
                 const product = category.products[rowIndex];
                 return (
                   <TableCell
-                    key={category.id}
+                    key={`product-${category.id}-${rowIndex}`}
                     align="center"
-                    sx={{ fontSize: "1rem" }}
+                    sx={{ fontSize: "1rem", textAlign: "center" }}
                   >
                     {product
                       ? `${product.name} (כמות: ${product.quantity})`

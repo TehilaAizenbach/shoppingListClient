@@ -4,9 +4,10 @@ import { CategoryWithProducts } from "../CategoriesProducts/CategoriesProducts";
 
 interface Props {
   categories: CategoryWithProducts[];
-}
+  getProductCountLabel: (name: string, products: { quantity: number }[]) => string;
 
-const CategoryCardList: React.FC<Props> = ({ categories }) => {
+}
+const CategoryCardList: React.FC<Props> = ({ categories,getProductCountLabel }) => {
   const theme = useTheme();
 
   return (
@@ -23,7 +24,7 @@ const CategoryCardList: React.FC<Props> = ({ categories }) => {
               fontSize: "1.1rem",
             }}
           >
-            {category.name}
+            {getProductCountLabel(category.name, category.products)}
           </Box>
 
           <CardContent sx={{ p: 0 }}>
