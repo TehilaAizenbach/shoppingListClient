@@ -7,17 +7,32 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
   useTheme,
+  Box,
 } from "@mui/material";
 import { CategoryWithProducts } from "../CategoriesProducts/CategoriesProducts";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 interface Props {
   categories: CategoryWithProducts[];
-  getProductCountLabel: (name: string, products: { quantity: number }[]) => string;
-
+  getProductCountLabel: (
+    name: string,
+    products: { quantity: number }[]
+  ) => string;
+  onDecrease: (id: number) => void;
+  onIncrease: (id: number) => void;
+  loading: boolean;
 }
 
-const CategoryTable: React.FC<Props> = ({ categories, getProductCountLabel }) => {
+const CategoryTable: React.FC<Props> = ({
+  categories,
+  getProductCountLabel,
+  onDecrease,
+  onIncrease,
+  loading,
+}) => {
   const theme = useTheme();
   const maxProducts = Math.max(...categories.map((c) => c.products.length), 0);
 
@@ -55,9 +70,31 @@ const CategoryTable: React.FC<Props> = ({ categories, getProductCountLabel }) =>
                     align="center"
                     sx={{ fontSize: "1rem", textAlign: "center" }}
                   >
-                    {product
-                      ? `${product.name} (כמות: ${product.quantity})`
-                      : ""}
+                    {product ? (
+                      <>
+                        <Box>{product.name} (כמות: {product.quantity})</Box>
+                        <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
+                          <IconButton
+                            size="small"
+                            onClick={() => onDecrease(product.id)}
+                            disabled={loading || product.quantity <= 0}
+                            aria-label={`הפחתת כמות של ${product.name}`}
+                          >
+                            <RemoveIcon fontSize="small" />
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={() => onIncrease(product.id)}
+                            disabled={loading}
+                            aria-label={`הוספת כמות של ${product.name}`}
+                          >
+                            <AddIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </TableCell>
                 );
               })}

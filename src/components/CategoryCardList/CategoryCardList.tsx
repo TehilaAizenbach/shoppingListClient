@@ -1,13 +1,26 @@
 import React from "react";
-import { Box, Card, CardContent, Typography, useTheme } from "@mui/material";
+import { Box, Card, CardContent, Typography, useTheme, IconButton } from "@mui/material";
+import { Add, Remove } from "@mui/icons-material";
 import { CategoryWithProducts } from "../CategoriesProducts/CategoriesProducts";
 
 interface Props {
   categories: CategoryWithProducts[];
-  getProductCountLabel: (name: string, products: { quantity: number }[]) => string;
-
+  getProductCountLabel: (
+    name: string,
+    products: { quantity: number }[]
+  ) => string;
+  onDecrease: (id: number) => void;
+  onIncrease: (id: number) => void;
+  loading: boolean;
 }
-const CategoryCardList: React.FC<Props> = ({ categories,getProductCountLabel }) => {
+
+const CategoryCardList: React.FC<Props> = ({
+  categories,
+  getProductCountLabel,
+  onDecrease,
+  onIncrease,
+  loading,
+}) => {
   const theme = useTheme();
 
   return (
@@ -50,7 +63,25 @@ const CategoryCardList: React.FC<Props> = ({ categories,getProductCountLabel }) 
                   }}
                 >
                   <span>{product.name}</span>
-                  <span>כמות: {product.quantity}</span>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <IconButton
+                      size="small"
+                      onClick={() => onDecrease(product.id)}
+                      disabled={loading || product.quantity <= 0}
+                      aria-label={`הפחתת כמות של ${product.name}`}
+                    >
+                      <Remove />
+                    </IconButton>
+                    <span>{product.quantity}</span>
+                    <IconButton
+                      size="small"
+                      onClick={() => onIncrease(product.id)}
+                      disabled={loading}
+                      aria-label={`הוספת כמות של ${product.name}`}
+                    >
+                      <Add />
+                    </IconButton>
+                  </Box>
                 </Box>
               ))
             )}

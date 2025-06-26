@@ -35,3 +35,7 @@ export async function updateItemQuantity(
   const response = await axios.put(`${API_URL}/${id}`, { quantity });
   return response.data;
 }
+
+export async function deleteItem(id: number): Promise<void> {
+  await axios.delete(`${API_URL}/${id}`);
+}
