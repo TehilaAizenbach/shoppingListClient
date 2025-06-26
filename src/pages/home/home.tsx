@@ -1,14 +1,13 @@
+import React from "react";
 import { useSelector } from "react-redux";
-import CategoriesProducts from "../../components/CategoriesProducts/CategoriesProducts";
-import Header from "../../components/Header/Header";
-import ProductFrom from "../../components/ProductForm/ProductForm";
-import CategorySelect from "../../components/Selected/CategorySelect";
-import Selected from "../../components/Selected/CategorySelect";
-import TotalItems from "../../components/TotalItems/TotalItems";
-import { RootState } from "../../store";
-import ProductForm from "../../components/ProductForm/ProductForm";
-
 import { Box, CircularProgress, Typography } from "@mui/material";
+
+import Header from "../../components/Header/Header";
+import TotalItems from "../../components/TotalItems/TotalItems";
+import ProductForm from "../../components/ProductForm/ProductForm";
+import CategoriesProducts from "../../components/CategoriesProducts/CategoriesProducts";
+
+import { RootState } from "../../store";
 
 const Home = () => {
   const categories = useSelector((state: RootState) => state.categories.categories);
@@ -20,7 +19,7 @@ const Home = () => {
     return (
       <Box
         sx={{
-          height: "100vh",         
+          height: "100vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -45,10 +44,10 @@ const Home = () => {
   }));
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
+        pt: { xs: "56px", sm: "64px" },
         display: "flex",
-        justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
       }}
@@ -57,9 +56,8 @@ const Home = () => {
       <TotalItems />
       <ProductForm />
       <CategoriesProducts categories={categoriesWithProducts} />
-    </div>
+    </Box>
   );
 };
 
 export default Home;
-
