@@ -42,7 +42,6 @@ const ProductForm = () => {
 
     setProductName("");
     setSelectedCategory(null);
-    setTimeout(() => setIsSubmitting(false), 300);
   };
 
   if (itemsLoading || categoriesLoading) {
