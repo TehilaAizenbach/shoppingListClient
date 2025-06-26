@@ -91,10 +91,30 @@ const CategorySelector: React.FC<Props> = ({
       )}
 
       {isMobile && (
-        <Drawer anchor="bottom" open={drawerOpen} onClose={handleClose}>
+        <Drawer
+          anchor="bottom"
+          open={drawerOpen}
+          onClose={handleClose}
+          PaperProps={{
+            sx: {
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              overflow: "hidden",
+            },
+          }}
+        >
           <List>
-            {categories.map((cat) => (
-              <ListItemButton key={cat.id} onClick={() => handleSelect(cat)}>
+            {categories.map((cat, index) => (
+              <ListItemButton
+                key={cat.id}
+                onClick={() => handleSelect(cat)}
+                sx={{
+                  borderBottom:
+                    index < categories.length - 1
+                      ? "1px solid #e0e0e0"
+                      : "none",
+                }}
+              >
                 {cat.name}
               </ListItemButton>
             ))}
