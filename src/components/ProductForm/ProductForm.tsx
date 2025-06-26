@@ -42,6 +42,7 @@ const ProductForm = () => {
 
     setProductName("");
     setSelectedCategory(null);
+    setTimeout(() => setIsSubmitting(false), 300);
   };
 
   if (itemsLoading || categoriesLoading) {
@@ -82,3 +83,7 @@ const ProductForm = () => {
 };
 
 export default ProductForm;
+function setIsSubmitting(arg0: boolean): void {
+  throw new Error("Function not implemented.");
+}
+
