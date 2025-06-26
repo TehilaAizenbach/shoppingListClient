@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { Box, Button, Stack, TextField, CircularProgress } from "@mui/material";
+import { Button, Stack, TextField, CircularProgress } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../store";
 import { addOrUpdateItem } from "../../store/itemsSlice";
 import CategorySelector from "../CategorySelector/CategorySelector";
 import { Category } from "../../types/category";
+import { FormContainer } from "./ProductForm.style";
 
 const ProductForm = () => {
-  const { loading: itemsLoading } = useSelector((state: RootState) => state.items);
-  const { categories, loading: categoriesLoading } = useSelector((state: RootState) => state.categories);
+  const { loading: itemsLoading } = useSelector(
+    (state: RootState) => state.items
+  );
+  const { categories, loading: categoriesLoading } = useSelector(
+    (state: RootState) => state.categories
+  );
   const items = useSelector((state: RootState) => state.items.items);
   const dispatch = useDispatch<AppDispatch>();
 
   const [productName, setProductName] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
 
   const handleAddProduct = () => {
     if (!selectedCategory || !productName.trim()) return;
@@ -25,6 +32,7 @@ const ProductForm = () => {
     );
 
     if (exists) {
+      // אפשר להוסיף כאן הודעה למשתמש אם רוצים
       return;
     }
 
@@ -42,14 +50,14 @@ const ProductForm = () => {
 
   if (itemsLoading || categoriesLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+      <FormContainer sx={{ display: "flex", justifyContent: "center", p: 3 }}>
         <CircularProgress />
-      </Box>
+      </FormContainer>
     );
   }
 
   return (
-    <Box sx={{ p: 2, width: 300 }}>
+    <FormContainer>
       <Stack spacing={2}>
         <TextField
           label="מוצר"
@@ -64,11 +72,16 @@ const ProductForm = () => {
           onSelectCategory={setSelectedCategory}
         />
 
-        <Button variant="contained" onClick={handleAddProduct} type="button" disabled={!productName.trim() || !selectedCategory}>
+        <Button
+          variant="contained"
+          onClick={handleAddProduct}
+          type="button"
+          disabled={!productName.trim() || !selectedCategory}
+        >
           הוסף
         </Button>
       </Stack>
-    </Box>
+    </FormContainer>
   );
 };
 

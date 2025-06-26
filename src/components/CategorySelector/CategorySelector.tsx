@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { ArrowDropDown } from "@mui/icons-material";
 import { Category } from "../../types/category";
+import { WrapperDiv } from "./CategorySelector.style";
 
 type Props = {
   categories: Category[];
@@ -19,7 +20,11 @@ type Props = {
   onSelectCategory: (cat: Category) => void;
 };
 
-const CategorySelector: React.FC<Props> = ({ categories, selectedCategory, onSelectCategory }) => {
+const CategorySelector: React.FC<Props> = ({
+  categories,
+  selectedCategory,
+  onSelectCategory,
+}) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [menuWidth, setMenuWidth] = useState<number>(0);
@@ -51,11 +56,7 @@ const CategorySelector: React.FC<Props> = ({ categories, selectedCategory, onSel
 
   return (
     <>
-      <div
-        ref={wrapperRef}
-        onClick={handleClick}
-        style={{ flex: 1, minWidth: 120, cursor: "pointer" }}
-      >
+      <WrapperDiv ref={wrapperRef} onClick={handleClick}>
         <TextField
           label="קטגוריה"
           value={selectedCategory?.name || ""}
@@ -70,7 +71,7 @@ const CategorySelector: React.FC<Props> = ({ categories, selectedCategory, onSel
           }}
           fullWidth
         />
-      </div>
+      </WrapperDiv>
 
       {!isMobile && (
         <Menu
