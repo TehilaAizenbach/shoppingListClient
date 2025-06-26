@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ShoppingItem } from "../types/shopping_Item";
 
-const API_URL = "http://localhost:3000/shopping-items";
+const API_URL = `${ process.env.REACT_APP_API_URL}/shopping-items`;
 
 // קבלת כל הפריטים
 export async function getItems(): Promise<ShoppingItem[]> {
@@ -22,7 +22,7 @@ export async function addItem({
 }): Promise<ShoppingItem> {
   const response = await axios.post(API_URL, {
     name,
-    categoryId, // ✅ שליחה תקינה ל־DTO
+    categoryId,
     quantity,
   });
   return response.data;
