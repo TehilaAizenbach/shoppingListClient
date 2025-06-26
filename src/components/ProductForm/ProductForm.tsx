@@ -22,19 +22,15 @@ const ProductForm = () => {
     null
   );
 
-  const handleAddProduct = () => {
+  const handleAddProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); 
     if (!selectedCategory || !productName.trim()) return;
 
-    const exists = items.some(
+    const existingItem = items.find(
       (item) =>
         item.name.trim().toLowerCase() === productName.trim().toLowerCase() &&
         item.category.id === selectedCategory.id
     );
-
-    if (exists) {
-      // אפשר להוסיף כאן הודעה למשתמש אם רוצים
-      return;
-    }
 
     dispatch(
       addOrUpdateItem({
