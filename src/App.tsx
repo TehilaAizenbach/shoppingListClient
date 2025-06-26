@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.tsx
+import React, { useEffect } from "react";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import rtlPlugin from "stylis-plugin-rtl";
+import { prefixer } from "stylis";
 
-function App() {
+import theme from "./theme";
+import Home from "./pages/home/home";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store";
+import { fetchCategories } from "./store/categoriesSlice";
+import { getItems } from "./store/itemsSlice";
+
+const cacheRtl = createCache({
+  key: "muirtl",
+  stylisPlugins: [prefixer, rtlPlugin],
+});
+
+export default function App() {
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(getItems());
+
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div dir="rtl">
+          <Home />
+        </div>
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
-
-export default App;
